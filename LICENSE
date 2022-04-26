@@ -1,4 +1,4 @@
-MIT License
+MIT License (excluding references/image2oled)
 
 Copyright (c) 2022 davidmcphee3
 
@@ -19,3 +19,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+License for image2oled
+
+This file is used from https://github.com/javl/image2cpp undeer the GPL v3
+license and thus same applies to the image2oled file. The changes simplify
+the creation of the bitmap for specific use of the 128x64 adafruit OLED
+using the code in the rest of this doorbellOLED repo. 
