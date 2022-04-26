@@ -1,0 +1,23 @@
+/*Color Scheme
+layer 0: #121212;
+0-1 border: #222222
+layer 1: #3B3B3B;
+1-2 border: #515151;
+layer 2: #626262;
+2-3 border: #7E7E7E;
+layer 3: #9E9E9E;
+
+text: #FFFFFF
+alt text: #b3b3b3;
+
+link 1: #BB86FC
+link 2: #03DAC6;
+
+Accent 1: #A5D6A7;
+Accent 2: #388E3C;
+
+Melle Background: #F48FB1
+Melle Accent: #C51162
+
+
+*/
