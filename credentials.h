@@ -1,2 +1,2 @@
-#define USER "ssid";
-#define PASS "pass";
+#define USER "Mr. D";
+#define PASS "test";
