@@ -1,5 +1,8 @@
 <!--
-	"image2cpp"
+	"image2oled"
+	Based on below:
+
+	"image2oled"
 	Original utility by:
 	https://jaspervanloenen.com
 
@@ -10,7 +13,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>image2cpp</title>
+	<title>image2oled</title>
 
 	<style type="text/css">
 		* {
@@ -230,11 +233,11 @@
 <body>
 	<div class="wrapper">
 		<section class="section">
-			<h1>image2cpp</h1>
-			<p>image2cpp is a simple tool to change images into byte arrays (or your array back into an image) for use with Arduino and (monochrome) displays such as OLEDs.
-				It was originally made to work with the Adafruit OLED library. An example sketch for Arduino and this library can be found <a href="https://github.com/javl/image2cpp/blob/master/oled_example/oled_example.ino" target="_blank">here</a>.</p>
-			<p>More info (and credits) can be found in the <a href="https://github.com/javl/image2cpp" target="_blank">Github repository</a>. This is also where you can report any <a href="https://github.com/javl/image2cpp/issues" target="_blank">issues</a> you might come across.</p>
-			<p>This tool also works offline. Simply save this page to your computer and open the file in your browser.</p>
+			<h1>image2oled</h1>
+			<p>image2oled is a simple tool to change images into byte arrays (or your array back into an image) for use with Arduino and (monochrome) displays such as OLEDs.
+				It was originally made to work with the Adafruit OLED library. An example sketch for Arduino and this library can be found <a href="https://github.com/javl/image2oled/blob/master/oled_example/oled_example.ino" target="_blank">here</a>.</p>
+			<p>More info (and credits) can be found in the <a href="https://github.com/javl/image2oled" target="_blank">Github repository</a>. This is also where you can report any <a href="https://github.com/javl/image2oled/issues" target="_blank">issues</a> you might come across.</p>
+			<p>This version, image2oled, simplifies the process for the 128x64 OLED for uploading to the arduino and storing the bitmap in a seperate header file.</p>
 		</section>
 
 		<section class="section bottom-divider">
@@ -242,19 +245,6 @@
 				<div class="column" id="file-input-column">
 					<h2 class="sub-section-title">1. Select image</h2>
 					<input type="file" id="file-input" name="file-input" multiple/><br />
-				</div>
-				<div class="column column-center">
-					<h2 class="sub-section-title">or</h2>
-				</div>
-				<div class="column column-right">
-					<h2 class="sub-section-title">1. Paste byte array</h2>
-					<textarea id="byte-input" class="byte-input"></textarea><br />
-					<div class="text-input-size">
-						<input type="number" min="0" id="text-input-width" class="size-input" value="128" /> x
-						<input type="number" min="0" id="text-input-height" class="size-input" value="64" /> px
-					</div>
-					<button onclick="handleTextInput('horizontal')">Read as horizontal</button>
-					<button onclick="handleTextInput('vertical')">Read as vertical</button>
 				</div>
 			</section>
 		</section>
@@ -265,7 +255,7 @@
 				<div class="table">
 
 					<div class="table-row">
-						<div class="table-cell"><label>Canvas size(s): </label></div>
+						<div class="table-cell"><label>Canvas size (ingored): </label></div>
 						<div class="table-cell">
 							<ul id="image-size-settings"></ul>
 							<div id="only-images-file-error" class="msg error-msg">Only images file type are allowed</div>
@@ -306,11 +296,7 @@
 						<div class="table-cell"><label for="scale">Scaling</label></div>
 						<div class="table-cell">
 							<select id="scale" name="scale" onchange="updateInteger('scale')">
-								<option value="1">original size</option>
 								<option value="2">scale to fit, keeping proportions</option>
-								<option value="3">stretch to fill canvas</option>
-								<option value="4">stretch to fill canvas horizontally</option>
-								<option value="5">stretch to fill canvas vertically</option>
 							</select>
 						</div>
 					</div>
@@ -364,28 +350,8 @@
 						<div class="table-cell"><label for="outputFormat">Code output format</label></div>
 						<div class="table-cell">
 							<select id="outputFormat" name="outputFormat" onchange="updateOutputFormat(this)">
-								<option value="plain">plain bytes</option>
 								<option value="arduino">Arduino code</option>
-								<option value="arduino_single">Arduino code, single bitmap</option>
-								<option value="adafruit_gfx">Adafruit GFXbitmapFont</option>
 							</select>
-							<div id="format-caption-container">
-								<div data-caption="arduino">
-									Adds some extra Arduino code around the output for easy copy-paste into
-									<a href="https://github.com/javl/image2cpp/blob/master/oled_example/oled_example.ino" target="_blank">this example</a>.
-									If multiple images are loaded, generates a byte array for each and appends a counter to the identifier.
-								</div>
-								<div data-caption="arduino_single">
-									Adds some extra Arduino code around the output for easy copy-paste.
-									If multiple images are loaded, generates a single byte array.
-								</div>
-								<div data-caption="adafruit_gfx">
-									Creates a <code>GFXbitmapFont</code> formatted ouput. Used by a modified version of the Adafruit GFX library.
-									GitHub project and example <a href="https://github.com/wiredolphin/Adafruit-GFX-Library/tree/bitmap-font" target="_blank">here</a>.
-									<br />
-									<i>First ASCII character</i> value is used only if a glyph identifier of length equal to 1 is not provided for each image. The value itself will be incremented by 1 for each glyph.
-								</div>
-							</div>
 							<div id="extra-settings-container">
 								<div id="adafruit-gfx-settings" class="table nested-table">
 									<div class="table-row">
@@ -418,22 +384,9 @@
 						<div class="table-cell">
 							<select id="drawMode" name="drawMode" onchange="updateDrawMode(this)">
 								<option value="horizontal1bit">Horizontal - 1 bit per pixel</option>
-								<option value="vertical1bit">Vertical - 1 bit per pixel</option>
-								<option value="horizontal565">Horizontal - 2 bytes per pixel (565)</option>
-								<option value="horizontalAlpha">Horizontal - 1 bit per pixel alpha map</option>
-								<option value="horizontal888">Horizontal - 3 bytes per pixel (rgb888</option>
 							</select>
 						</div>
 					</div>
-				</div>
-
-				<div id="note1bit">
-					<div class="note">
-						<i>If your image looks all messed up on your display, like the image below, try using a different mode.</i>
-					</div>
-					<img class="inlineImg"
-						src="data:image/jpeg;base64,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"
-					width="150" height="64" alt="" />
 				</div>
 			</section>
 
@@ -483,7 +436,7 @@
 						output_string += b + ", ";
 						output_index++;
 						if(output_index >= 16){
-							output_string += "\n";
+							output_string += " \\\n";
 							output_index = 0;
 						}
 						number = 0;
@@ -693,7 +646,7 @@
 			flipHorizontally: false,
 			flipVertically: false,
 			backgroundColor: "white",
-			scale: "1",
+			scale: "2",
 			drawMode: "horizontal",
 			threshold: 128,
 			outputFormat: "plain",
@@ -1060,8 +1013,8 @@
 
 							imageSizeSettings.appendChild(imageEntry);
 
-							canvas.width = img.width;
-							canvas.height = img.height;
+							canvas.width = 128;
+							canvas.height = 64;
 							canvasContainer.appendChild(canvas);
 
 							images.push(img, canvas, file.name.split(".")[0]);
@@ -1099,122 +1052,18 @@
 
 			switch(settings["outputFormat"]) {
 
-				case "arduino": {
-					let varQuickArray = [];
-					let bytesUsed     = 0;
-					// --
-					images.each(function(image) {
-						code = imageToString(image);
-
-						// Trim whitespace from end and remove trailing comma
-						code = code.replace(/,\s*$/,"");
-
-						code = "\t" + code.split("\n").join("\n\t") + "\n";
-						var variableCount = images.length() > 1 ? count++ : "";
-						var comment = "// '" + image.glyph + "', "+image.canvas.width+"x"+image.canvas.height+"px\n";
-						bytesUsed += code.split("\n").length * 16; // 16 bytes per line.
-						console.log(image);
-
-						let varname = getIdentifier() + image.glyph.replace(/[^a-zA-Z0-9]/g,"_");
-						varQuickArray.push(varname);
-						code = comment + "const " + getType() + " " + varname + " [] PROGMEM = {\n" + code + "};\n";
-						output_string += code;
-					});
-					// --
-					varQuickArray.sort();
-					// --
-					output_string += "\n// Array of all bitmaps for convenience. (Total bytes used to store images in PROGMEM = "+bytesUsed+")\n"
-					output_string += "const int " + (getIdentifier()+"allArray_LEN") + " = " + varQuickArray.length + ";\n"
-					output_string += "const " + getType() + "* " + (getIdentifier()+"allArray") + "["+varQuickArray.length+"] = {\n\t"+varQuickArray.join(",\n\t")+"\n};\n";
-					// --
-					break;
-				}
-
-				case "arduino_single": {
-					var comment = "";
-					images.each(function(image) {
-						code = imageToString(image);
-						code = "\t" + code.split("\n").join("\n\t") + "\n";
-						comment = "\t// '" + image.glyph + ", " + image.canvas.width+"x"+image.canvas.height+"px\n";
-						output_string += comment + code;
-					});
-
-					output_string = output_string.replace(/,\s*$/,"");
-
-					output_string = "const " + getType() + " " +
-						+ getIdentifier()
-						+ " [] PROGMEM = {"
-						+ "\n" + output_string + "\n};";
-					break;
-				}
-
-				case "adafruit_gfx": { // bitmap
-					var comment = "";
-					var useGlyphs = 0;
-					images.each(function(image) {
-						code = imageToString(image);
-						code = "\t" + code.split("\n").join("\n\t") + "\n";
-						comment = "\t// '" + image.glyph + ", " + image.canvas.width+"x"+image.canvas.height+"px\n";
-						output_string += comment + code;
-						if(image.glyph.length == 1) useGlyphs++;
-					});
-
-					output_string = output_string.replace(/,\s*$/,"");
-					output_string = "const unsigned char "
-						+ getIdentifier()
-						+ "Bitmap"
-						+ " [] PROGMEM = {"
-						+ "\n" + output_string + "\n};\n\n"
-						+ "const GFXbitmapGlyph "
-						+ getIdentifier()
-						+ "Glyphs [] PROGMEM = {\n";
-
-					var firstAschiiChar = document.getElementById("first-ascii-char").value;
-					var xAdvance = parseInt(document.getElementById("x-advance").value);
-					var offset = 0;
-					code = "";
-
-					// GFXbitmapGlyph
-					images.each(function(image) {
-						code += "\t{ "
-							+ offset + ", "
-							+ image.canvas.width + ", "
-							+ image.canvas.height + ", "
-							+ xAdvance + ", "
-							+ "'" + (images.length() == useGlyphs ?
-								image.glyph :
-									String.fromCharCode(firstAschiiChar++)) + "'"
-							+ " }";
-						if(image != images.last()){ code += ","; }
-						code += "// '" + image.glyph + "'\n";
-						offset += image.canvas.width;
-					});
-					code += "};\n";
-					output_string += code;
-
-					// GFXbitmapFont
-					output_string += "\nconst GFXbitmapFont "
-						+ getIdentifier()
-						+ "Font PROGMEM = {\n"
-						+ "\t(uint8_t *)"
-						+ getIdentifier() + "Bitmap,\n"
-						+ "\t(GFXbitmapGlyph *)"
-						+ getIdentifier()
-						+ "Glyphs,\n"
-						+ "\t" + images.length()
-						+ "\n};\n";
-					break;
-				}
 				default: { // plain
 					images.each(function(image) {
 						code = imageToString(image);
-						var comment = image.glyph ? ("// '" + image.glyph + "', " + image.canvas.width+"x"+image.canvas.height+"px\n") : "";
+						var comment = image.glyph ? ("// Add this comment to main Arduino code: const unsigned char imgx [] PROGMEM = IMGx; \n") : "";
+						var define = image.glyph ? ("#define IMGx {\\ \n") : "";
 						if(image.img != images.first().img) comment = "\n" + comment;
-						code = comment + code;
+						code = comment + define + code;
 						output_string += code;
 					});
 					// Trim whitespace from end and remove trailing comma
 					output_string = output_string.replace(/,\s*$/g,"");
+					output_string += "};";
 				}
 			}
 
