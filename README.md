@@ -13,8 +13,7 @@ Open doorbellOLED and find the void setup() section.
 Add this template at the bottom of the section.
 
 server.on("/replaceThis", [](){
-    drawText("Custom Text");
-    server.send(200, "text/html", homePage);
+    configText("Custom Text");
   });
 
 "/replaceThis" is the command sent to the server.
@@ -42,10 +41,6 @@ and find the void setup() section.
 Add this template to the bottom:
 
 server.on("/imgx", [](){
-    display.clearDisplay();
-    display.drawBitmap(0, 0, imgx, 128, 64, 1);
-    display.display();
-    delay(2000);
-    server.send(200, "text/html", homePage);
+    configImg(imgx)
   });
 A custom returned page can be added same as in 1.
