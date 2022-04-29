@@ -1,2 +1,2 @@
 #define USER "Mr. D";
-#define PASS "test";
+#define PASS "#lavalamp99";

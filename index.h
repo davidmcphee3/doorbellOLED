@@ -105,6 +105,7 @@ a:hover{
   font-family:Arial;
   line-height: normal;
   font-size:48px;
+  transition: 0.3s;
 }
 
 #nav li a:hover {
@@ -156,6 +157,7 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #388E3C;
+  transition: 0.3s;
 }
 
 .customText {
@@ -172,11 +174,10 @@ input[type=submit]:hover {
 
 <div class="main">
 <div class="title">David's Doorbell</div>
-Welcome to the screen on my doorbell. Are are (or will be) 3
-options to chose from. The first is a preset message for
+Welcome to the screen on my doorbell. There are 3
+options to chose from. The first are preset messages for
 quick access. The second is a custom message. Finally there
-is an image upload. The latter two can also be added in
-a repeating sequence.
+is are preset images.
 
 <div class="subContent">
 Quick Message
@@ -191,7 +192,7 @@ Quick Message
 Custom Message
 <div class="customText">
 <form action="/msg" method="POST">
-<input type="text" name="Message" id="message" placeholder="message"/>
+<input type="text" name="Message" id="Message" placeholder="message"/>
 <input type="submit" value="Send">
 </form>
 </div></div>
@@ -205,7 +206,7 @@ Quick Image
 </ul>
 </div></div>
 <br>The whole project plus two reference files for this project are listed on
-<a href="https://davidmcphee.ca/doorbell.html">davidmcphee.ca</a>
+<a href="https://davidmcphee.ca/doorbell">davidmcphee.ca/doorbell</a>
 which refer to the color scheme and how to add more buttons to the Quick Message and
 Quick Image options.
 </div>
